@@ -107,4 +107,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-demo/app-${{ env.ARTIFACT_NAME }}:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-demo:app-${{ env.ARTIFACT_NAME }}
