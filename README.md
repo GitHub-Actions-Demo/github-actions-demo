@@ -1,6 +1,5 @@
-# Nuxt 3 Minimal Starter
-
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+# GitHub Actions Demo
+[![SonarCloud analysis](https://github.com/nick11703/github-actions-demo/actions/workflows/test-and-scan.yaml/badge.svg)](https://github.com/nick11703/github-actions-demo/actions/workflows/test-and-scan.yaml)
 
 ## Setup
 
