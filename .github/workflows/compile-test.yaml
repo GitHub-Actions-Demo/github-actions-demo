@@ -1,0 +1,29 @@
+name: Compile Test
+
+on:
+  workflow_call:
+    secrets:
+      token:
+        required: true
+env:
+  ARTIFACT_NAME: ${{ github.event.pull_request.number || 'main'}}
+
+jobs:
+  Analize:
+    runs-on: ubuntu-latest
+    container: docker://node:18.17.0
+    steps:
+      - name: Check out current branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Install Depencencies
+        run: npm install -g pnpm && pnpm i --frozen-lockfile
+      - name: Build Application
+        run: pnpm build
+      - name: Save App Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-${{ env.ARTIFACT_NAME }}
+          path: .output
+          if-no-files-found: error
