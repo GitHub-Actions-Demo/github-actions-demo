@@ -2,14 +2,16 @@ name: Compile Test
 
 on:
   workflow_call:
-    secrets:
-      token:
-        required: true
+    inputs:
+      artifact-name:
+        required: false
+        type: string
+
 env:
-  ARTIFACT_NAME: ${{ github.event.pull_request.number || 'main'}}
+  ARTIFACT_NAME: ${{ inputs.artifact-name || github.event.pull_request.number || 'main'}}
 
 jobs:
-  Analize:
+  Compile:
     runs-on: ubuntu-latest
     container: docker://node:18.17.0
     steps:

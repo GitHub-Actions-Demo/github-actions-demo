@@ -3,7 +3,9 @@ name: Test & Scan
 on:
   workflow_call:
     secrets:
-      token:
+      GITHUB_TOKEN:
+        required: true
+      SONAR_TOKEN:
         required: true
 
 env:
