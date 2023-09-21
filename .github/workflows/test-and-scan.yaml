@@ -94,3 +94,10 @@ jobs:
           name: app-server-${{ env.ARTIFACT_NAME }}
           path: .output/server
           if-no-files-found: error
+      - name: Build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-demo/app-${{ env.ARTIFACT_NAME }}:latest
