@@ -24,6 +24,9 @@ env:
 jobs:
   Docker:
     name: Build & Push Docker Image
+    permissions:
+      id-token: write
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Check out current branch
