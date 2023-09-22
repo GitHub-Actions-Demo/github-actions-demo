@@ -52,7 +52,7 @@ jobs:
 
       - name: Get Artifact Name
         id: artifact
-        uses: ./.github/actions/get-artifact-name.yaml
+        uses: ./.github/actions/get-artifact-name/action.yaml
         with:
           pr-number: ${{ github.event.pull_request.number }}
           artifact-name: ${{ inputs.artifact-name }}
