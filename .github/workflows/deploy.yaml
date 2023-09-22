@@ -7,7 +7,7 @@ on:
     inputs:
       pr_number:
         description: PR number for testing
-        required: true
+        required: false
         type: number
       # env_to_use:
       #   description: Environment
@@ -21,7 +21,7 @@ on:
       #   required: true
       #   type: string
 env:
-  ARTIFACT_NAME: app-${{ inputs.pr_number }}
+  # ARTIFACT_NAME: app-${{ inputs.pr_number }}
   PROJECT_ID: github-actions-demo-399800
   GAR_LOCATION: us-east5
   REPOSITORY: github-actions-demo
