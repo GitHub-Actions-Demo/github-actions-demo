@@ -8,6 +8,7 @@ RUN pnpm build
 
 FROM $SOURCE_INSTALL_IMAGE AS final
 COPY --from=build --chown=node:node /var/www/.output /var/www/.output
+EXPOSE 8080
 EXPOSE 3000
 EXPOSE 9229
 ENTRYPOINT [ "node", "/var/www/.output/server/index.mjs" ]
