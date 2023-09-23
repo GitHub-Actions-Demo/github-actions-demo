@@ -63,9 +63,16 @@ jobs:
       - name: Test Artifact Name Action
         run: echo ${{ steps.artifact.outputs.artifact-name }}
       
-      # - name: Build and Push Container
-      #   run: |-
-      #     docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ steps.artifact.outputs.artifact-name }}:${{ inputs.revision }}" ./
-      #     docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ steps.artifact.outputs.artifact-name }}:${{ inputs.revision }}"
+      - name: Build and Push Container
+        env:
+          DOCKER_TAG1: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ steps.artifact.outputs.artifact-name }}:${{ inputs.revision }}
+          DOCKER_TAG2: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ steps.artifact.outputs.artifact-name }}:${{ github.sha }}
+        run: |-
+          docker build \
+            -t "${{ env.DOCKER_TAG1 }}" /
+            -t "${{ env.DOCKER_TAG2 }}" /
+            ./
+          docker push \
+            "${{ env.DOCKER_TAG1 }}"
 
       # END - Docker auth and build
