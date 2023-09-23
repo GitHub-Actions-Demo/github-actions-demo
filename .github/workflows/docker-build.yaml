@@ -3,6 +3,8 @@ name: Build & Push Docker Image
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    types: [opened, synchronize, reopened]
   workflow_call:
     inputs:
       artifact-name:
@@ -77,3 +79,9 @@ jobs:
           docker push "${{ env.DOCKER_TAG2 }}"
 
       # END - Docker auth and build
+
+  Compile:
+    if: github.ref_name == github.event.repository.default_branch
+    name: Deploy Main
+    uses: ./.github/workflows/deploy.yaml
+    secrets: inherit
