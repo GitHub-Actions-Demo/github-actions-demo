@@ -57,6 +57,25 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
+      - name: 'Add label to PR - Deploying...'
+        if: inputs.pr_number
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            let issue_number = ${{ inputs.pr_number }};
+            await github.rest.issues.removeLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue_number,
+              labels: ['Deployed']
+            });
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue_number,
+              labels: ['Deploying...']
+            });
       - name: Get Artifact Name
         id: artifact
         uses: GitHub-Actions-Demo/action-artifact-name@v1
@@ -105,8 +124,14 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue_number,
-              body: `App has been deployed to ${{ inputs.env_to_use }} for testing ${{ inputs.jira_ticket }}
-                You can view it at <a href="${{ steps.deploy.outputs.url }}"></a>`
+              body: `App has been deployed for testing ${{ inputs.jira_ticket }}
+                You can view it at ${{ steps.deploy.outputs.url }}`
+            });
+            await github.rest.issues.removeLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue_number,
+              labels: ['Deploying...']
             });
             await github.rest.issues.addLabels({
               owner: context.repo.owner,
