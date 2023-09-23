@@ -1,5 +1,5 @@
 # GitHub Actions Demo
-[![SonarCloud analysis](https://github.com/nick11703/github-actions-demo/actions/workflows/test-and-scan.yaml/badge.svg)](https://github.com/nick11703/github-actions-demo/actions/workflows/test-and-scan.yaml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=github-actions-demo&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=github-actions-demo)
 
 ## Setup
 
