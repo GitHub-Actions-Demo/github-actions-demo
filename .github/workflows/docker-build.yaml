@@ -33,6 +33,8 @@ jobs:
       id-token: write
       contents: read
     runs-on: ubuntu-latest
+    outputs:
+      artifact-name: ${{ steps.artifact.outputs.artifact-name }}
     steps:
       - name: Check out current branch
         uses: actions/checkout@v3
@@ -80,11 +82,14 @@ jobs:
 
       # END - Docker auth and build
 
-  Compile:
+  Deploy:
     if: github.ref_name == github.event.repository.default_branch
+    needs: Docker
     permissions:
       id-token: write
       contents: read
     name: Deploy Main
     uses: ./.github/workflows/deploy.yaml
     secrets: inherit
+    with:
+      artifact-name: ${{ needs.Docker.outputs.artifact-name }}
