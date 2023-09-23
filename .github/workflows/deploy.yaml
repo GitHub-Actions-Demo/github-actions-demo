@@ -64,11 +64,11 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             let issue_number = ${{ inputs.pr_number }};
-            await github.rest.issues.removeLabels({
+            await github.rest.issues.removeLabel({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue_number,
-              labels: ['Deployed']
+              name: 'Deployed'
             });
             await github.rest.issues.addLabels({
               owner: context.repo.owner,
@@ -127,11 +127,11 @@ jobs:
               body: `App has been deployed for testing ${{ inputs.jira_ticket }}
                 You can view it at ${{ steps.deploy.outputs.url }}`
             });
-            await github.rest.issues.removeLabels({
+            await github.rest.issues.removeLabel({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue_number,
-              labels: ['Deploying...']
+              name: 'Deploying...'
             });
             await github.rest.issues.addLabels({
               owner: context.repo.owner,
