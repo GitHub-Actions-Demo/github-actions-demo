@@ -73,7 +73,7 @@ jobs:
             -t "${{ env.DOCKER_TAG1 }}" \
             -t "${{ env.DOCKER_TAG2 }}" \
             ./
-          docker push \
-            "${{ env.DOCKER_TAG1 }}"
+          docker push "${{ env.DOCKER_TAG1 }}"
+          docker push "${{ env.DOCKER_TAG2 }}"
 
       # END - Docker auth and build
