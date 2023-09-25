@@ -13,9 +13,8 @@ jobs:
     steps:
     - name: list all open pull requests
       id: list
-      uses: andrea-armstrong/github-list-pull-requests@v1.0.0
+      uses: GitHub-Actions-Demo/action-pr-update/releases/tag/v0.0.1
       with:
         token: ${{secrets.GITHUB_TOKEN}}
-        state: 'open'
     - name: output
-      run: echo '${{ steps.list.outputs.pullRequestNumbers }}'
+      run: echo '${{ steps.list.outputs.open-pr-list }}'
