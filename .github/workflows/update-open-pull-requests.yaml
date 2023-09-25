@@ -13,7 +13,7 @@ jobs:
     steps:
     - name: list all open pull requests
       id: list
-      uses: GitHub-Actions-Demo/action-pr-update/releases/tag/v0.0.1
+      uses: GitHub-Actions-Demo/action-pr-update/@v0.0.1
       with:
         token: ${{secrets.GITHUB_TOKEN}}
     - name: output
