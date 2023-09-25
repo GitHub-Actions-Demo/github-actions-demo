@@ -1,0 +1,42 @@
+name: Rebuild PR
+
+on:
+  pull_request:
+    types:
+      labeled
+
+permissions:
+  pull-requests: read
+
+env:
+  PR_NUMBER: ${{ github.event.number }}
+
+jobs:
+  Build:
+    if: github.event.label.name == vars.OUTDATED_BRANCH_TRIGGER_LABEL
+    name: Build
+    uses: ./.github/workflows/docker-build.yaml
+    secrets: inherit
+  BranchAnalysis:
+    if: github.event.label.name == vars.OUTDATED_BRANCH_TRIGGER_LABEL
+    name: Test & Analize
+    uses: ./.github/workflows/branch-analysis.yaml
+    secrets: inherit
+  Unlabel:
+    if: github.event.label.name == vars.OUTDATED_BRANCH_TRIGGER_LABEL
+    name: Remove label
+    runs-on: ubuntu-latest
+    steps:
+    - name: Remove label
+      uses: actions/github-script@v6
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          let fs = require('fs');
+          let issue_number = ${{ env.PR_NUMBER }};
+          await github.rest.issues.removeLabel({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: issue_number,
+            name: '${{ vars.OUTDATED_BRANCH_TRIGGER_LABEL }}'
+          });

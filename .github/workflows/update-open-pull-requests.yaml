@@ -11,10 +11,9 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-    - name: list all open pull requests
+    - name: Label all open pull requests
       id: list
-      uses: GitHub-Actions-Demo/action-pr-update/@v0.0.3
+      uses: GitHub-Actions-Demo/action-pr-update/@v0.0.4
       with:
         token: ${{secrets.GITHUB_TOKEN}}
-    - name: output
-      run: echo '${{ steps.list.outputs.open-pr-list }}'
+        label: ${{ vars.OUTDATED_BRANCH_TRIGGER_LABEL }}
