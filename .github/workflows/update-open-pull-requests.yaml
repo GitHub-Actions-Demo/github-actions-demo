@@ -13,7 +13,7 @@ jobs:
     steps:
     - name: Label all open pull requests
       id: list
-      uses: GitHub-Actions-Demo/action-pr-update/@v0.0.4
+      uses: GitHub-Actions-Demo/action-pr-update/@v0.0.5
       with:
         token: ${{secrets.GITHUB_TOKEN}}
         label: ${{ vars.OUTDATED_BRANCH_TRIGGER_LABEL }}
