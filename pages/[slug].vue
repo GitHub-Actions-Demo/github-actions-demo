@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>test/[slug]</div>
+    <div>[slug]</div>
     <NuxtWelcome />
   </div>
 </template>

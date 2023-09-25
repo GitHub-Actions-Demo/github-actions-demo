@@ -26,6 +26,8 @@
     "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
     "eslint-plugin-promise": "^6.0.0",
     "nuxt": "^3.7.3",
-    "typescript": "*"
+    "typescript": "^5.1.6",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4"
   }
 }
