@@ -3,7 +3,7 @@ name: Rebuild PR
 on:
   pull_request:
     types:
-      labeled
+      [labeled]
 
 permissions:
   pull-requests: read
