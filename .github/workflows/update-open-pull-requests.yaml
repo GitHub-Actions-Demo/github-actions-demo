@@ -11,9 +11,18 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
+    - name: Generate a token
+      id: generate_token
+      uses: actions/create-github-app-token@v1
+      with:
+        app_id: ${{ secrets.WORKFLOW_DISPATCH_TOKEN_ID }}
+        private_key: ${{ secrets.WORKFLOW_DISPATCH_TOKEN_PRIVATE_KEY }}
+
     - name: Rebuild all open pull requests
       id: list
-      uses: GitHub-Actions-Demo/action-pr-update/@v0.0.7
+      env:
+        GITHUB_TOKEN:  ${{ steps.generate_token.outputs.token }}
+      uses: GitHub-Actions-Demo/action-pr-update/@v0.0.8
       with:
         token: ${{secrets.GITHUB_TOKEN}}
         label: ${{ vars.OUTDATED_BRANCH_TRIGGER_LABEL }}
