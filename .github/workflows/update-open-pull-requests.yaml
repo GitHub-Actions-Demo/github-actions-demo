@@ -29,4 +29,4 @@ jobs:
       with:
         token: ${{ steps.generate_token.outputs.token }}
         label: ${{ vars.OUTDATED_BRANCH_TRIGGER_LABEL }}
-        workflow_id: ./.github/workflows/rebuild-pull-request.yaml
+        workflow_id: rebuild-pull-request.yaml
