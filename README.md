@@ -1,23 +1,13 @@
-# Nuxt 3 Minimal Starter
-
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+# GitHub Actions Demo
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=github-actions-demo&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=github-actions-demo)
 
 ## Setup
 
 Make sure to install the dependencies:
 
 ```bash
-# npm
-npm install
-
 # pnpm
 pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
 ## Development Server
@@ -25,17 +15,8 @@ bun install
 Start the development server on `http://localhost:3000`:
 
 ```bash
-# npm
-npm run dev
-
 # pnpm
 pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
 ## Production
@@ -43,33 +24,29 @@ bun run dev
 Build the application for production:
 
 ```bash
-# npm
-npm run build
-
 # pnpm
 pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
 Locally preview production build:
 
 ```bash
-# npm
-npm run preview
-
 # pnpm
 pnpm run preview
+```
 
-# yarn
-yarn preview
 
-# bun
-bun run preview
+## Containerizing
+
+Build with docker for node 18.12
+```bash
+docker build \
+  -t app-build \
+  -f Dockerfile .
+```
+Running the app in debug mode
+```bash
+docker run --rm -p 3000:3000 -p 9229:9229 app-build
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

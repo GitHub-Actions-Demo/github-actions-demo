@@ -1,0 +1,12 @@
+.env
+.git
+.npmrc
+.nuxt
+.output
+.vscode
+.gitignore
+.github
+node_modules
+README.md
+reports
+Dockerfile
