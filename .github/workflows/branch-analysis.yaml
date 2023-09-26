@@ -4,7 +4,7 @@ on:
   # push:
   #   branches: [ "main" ]
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened, labeled]
   workflow_call:
     inputs:
       checkout-ref:
@@ -16,15 +16,17 @@ permissions:
 
 jobs:
   Analize:
+    if: (github.event.label.name == vars.OUTDATED_BRANCH_TRIGGER_LABEL) || !github.event.label.name
     name: Test & Analize
     uses: ./.github/workflows/test-and-scan.yaml
     secrets: inherit
-    with:
-      checkout-ref: ${{ inputs.checkout-ref }}
+    # with:
+    #   checkout-ref: ${{ inputs.checkout-ref }}
   Compile:
+    if: (github.event.label.name == vars.OUTDATED_BRANCH_TRIGGER_LABEL) || !github.event.label.name
     name: Compile Test
     uses: ./.github/workflows/compile-test.yaml
     secrets: inherit
-    with:
-      checkout-ref: ${{ inputs.checkout-ref }}
+    # with:
+    #   checkout-ref: ${{ inputs.checkout-ref }}
   
