@@ -1,6 +1,17 @@
 name: Rebuild PR
 
 on:
+  workflow_dispatch:
+    inputs:
+      checkout-ref:
+        required: false
+        type: string
+      pr-number:
+        required: true
+        type: number
+      pr-context:
+        required: true
+        type: string
   workflow_call:
     inputs:
       checkout-ref:
