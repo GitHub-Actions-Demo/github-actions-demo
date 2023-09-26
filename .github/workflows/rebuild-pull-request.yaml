@@ -9,7 +9,16 @@ on:
       pr-number:
         required: true
         type: string
+      pr-ref:
+        required: true
+        type: string
+      pr-merge-commit-sha:
+        required: true
+        type: string
       pr-context:
+        required: true
+        type: string
+      git-filter:
         required: true
         type: string
   workflow_call:
@@ -20,7 +29,16 @@ on:
       pr-number:
         required: true
         type: string
+      pr-ref:
+        required: true
+        type: string
+      pr-merge-commit-sha:
+        required: true
+        type: string
       pr-context:
+        required: true
+        type: string
+      git-filter:
         required: true
         type: string
 
@@ -40,13 +58,13 @@ jobs:
       contents: read
       pull-requests: write
     with:
-      checkout-ref: ${{ inputs.checkout-ref }}
+      checkout-ref: ${{ inputs.pr-merge-ref }}
   BranchAnalysis:
     name: Test & Analize
     uses: ./.github/workflows/branch-analysis.yaml
     secrets: inherit
     with:
-      checkout-ref: ${{ inputs.checkout-ref }}
+      checkout-ref: ${{ inputs.pr-merge-commit-sha }}
   Unlabel:
     name: Remove label
     needs: Build
