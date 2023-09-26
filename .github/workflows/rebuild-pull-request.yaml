@@ -12,18 +12,19 @@ env:
   PR_NUMBER: ${{ github.event.number }}
 
 jobs:
-  # Build:
-  #   if: github.event.label.name == vars.OUTDATED_BRANCH_TRIGGER_LABEL
-  #   name: Build
-  #   uses: ./.github/workflows/docker-build.yaml
-  #   secrets: inherit
-  # BranchAnalysis:
-  #   if: github.event.label.name == vars.OUTDATED_BRANCH_TRIGGER_LABEL
-  #   name: Test & Analize
-  #   uses: ./.github/workflows/branch-analysis.yaml
-  #   secrets: inherit
+  Build:
+    if: github.event.label.name == vars.OUTDATED_BRANCH_TRIGGER_LABEL
+    name: Build
+    uses: ./.github/workflows/docker-build.yaml
+    secrets: inherit
+  BranchAnalysis:
+    if: github.event.label.name == vars.OUTDATED_BRANCH_TRIGGER_LABEL
+    name: Test & Analize
+    uses: ./.github/workflows/branch-analysis.yaml
+    secrets: inherit
   Unlabel:
     name: Remove label
+    needs: Build
     runs-on: ubuntu-latest
     steps:
     - name: Remove label
