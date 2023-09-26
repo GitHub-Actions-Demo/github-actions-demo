@@ -38,6 +38,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
+      pull-requests: write
     with:
       checkout-ref: ${{ inputs.checkout-ref }}
   BranchAnalysis:
