@@ -1,15 +1,12 @@
 name: Build & Push Docker Image
 
 on:
-  # push:
-  #   branches: [ "main" ]
+  push:
+    branches: [ "main" ]
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened, labeled]
   workflow_call:
     inputs:
-      checkout-ref:
-        required: false
-        type: string
       artifact-name:
         required: false
         type: string
@@ -31,6 +28,7 @@ env:
 
 jobs:
   Docker:
+    if: (github.event.label.name == vars.OUTDATED_BRANCH_TRIGGER_LABEL) || !github.event.label.name
     name: Build & Push Docker Image
     permissions:
       id-token: write
@@ -43,7 +41,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-          ref: ${{ inputs.checkout-ref }}
 
       - name: Google Auth
         id: auth
@@ -85,6 +82,26 @@ jobs:
           docker push "${{ env.DOCKER_TAG2 }}"
 
       # END - Docker auth and build
+
+  Unlabel:
+    if: (github.event.label.name == vars.OUTDATED_BRANCH_TRIGGER_LABEL) || !github.event.label.name
+    name: Remove Rebuilding label
+    needs: Docker
+    runs-on: ubuntu-latest
+    steps:
+    - name: Remove ${{ vars.OUTDATED_BRANCH_TRIGGER_LABEL }} label
+      uses: actions/github-script@v6
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          let fs = require('fs');
+          let issue_number = parseInt(${{ github.event.pull_request.number }});
+          await github.rest.issues.removeLabel({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: issue_number,
+            name: '${{ vars.OUTDATED_BRANCH_TRIGGER_LABEL }}'
+          });
 
   Deploy:
     if: github.ref_name == github.event.repository.default_branch

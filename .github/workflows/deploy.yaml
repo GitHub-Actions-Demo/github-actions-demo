@@ -76,6 +76,7 @@ jobs:
               issue_number: issue_number,
               labels: ['Deploying...']
             });
+
       - name: Get Artifact Name
         id: artifact
         uses: GitHub-Actions-Demo/action-artifact-name@v1

@@ -20,12 +20,12 @@ jobs:
       with:
         app_id: ${{ secrets.WORKFLOW_DISPATCH_TOKEN_ID }}
         private_key: ${{ secrets.WORKFLOW_DISPATCH_TOKEN_PRIVATE_KEY }}
+
     - name: Rebuild all open pull requests
       id: workflows
       env:
         GITHUB_TOKEN:  ${{ steps.generate_token.outputs.token }}
-      uses: GitHub-Actions-Demo/action-pr-update/@v0.0.15
+      uses: GitHub-Actions-Demo/action-pr-update/@v0.0.18
       with:
         token: ${{ steps.generate_token.outputs.token }}
         label: ${{ vars.OUTDATED_BRANCH_TRIGGER_LABEL }}
-        workflow_id: rebuild-pull-request.yaml

@@ -6,9 +6,6 @@ on:
       artifact-name:
         required: false
         type: string
-      checkout-ref:
-        required: false
-        type: string
 
 env:
   ARTIFACT_NAME: ${{ inputs.artifact-name || github.event.pull_request.number || 'main'}}
@@ -22,11 +19,13 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-          ref: ${{ inputs.checkout-ref }}
+
       - name: Install Depencencies
         run: npm install -g pnpm && pnpm i --frozen-lockfile
+
       - name: Build Application
         run: pnpm build
+
       - name: Save App Artifact
         uses: actions/upload-artifact@v3
         with:
