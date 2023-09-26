@@ -8,7 +8,7 @@ on:
         type: string
       pr-number:
         required: true
-        type: number
+        type: string
       pr-context:
         required: true
         type: string
@@ -19,7 +19,7 @@ on:
         type: string
       pr-number:
         required: true
-        type: number
+        type: string
       pr-context:
         required: true
         type: string
@@ -57,7 +57,7 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           let fs = require('fs');
-          let issue_number = ${{ env.PR_NUMBER }};
+          let issue_number = parseInt(${{ inputs.pr-number }});
           await github.rest.issues.removeLabel({
             owner: context.repo.owner,
             repo: context.repo.repo,
