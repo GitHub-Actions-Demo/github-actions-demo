@@ -9,9 +9,15 @@ on:
       pr-number:
         required: true
         type: number
+      pr-context:
+        required: true
+        type: string
 
 permissions:
   pull-requests: write
+
+env:
+  GITHUB_CONTEXT: ${{ toJSON(inputs.pr-context) }}
 
 jobs:
   Build:
