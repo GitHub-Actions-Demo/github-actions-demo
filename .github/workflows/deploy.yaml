@@ -57,7 +57,7 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - name: 'Add label to PR - Deploying...'
+      - name: Add label to PR - ${{ vars.APP_DEPLOYING_LABEL }}
         if: inputs.pr_number
         uses: actions/github-script@v6
         with:
@@ -68,13 +68,13 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue_number,
-              name: 'Deployed'
+              name: '${{ vars.APP_DEPLOYED_LABEL }}'
             });
             await github.rest.issues.addLabels({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue_number,
-              labels: ['Deploying...']
+              labels: ['${{ vars.APP_DEPLOYING_LABEL }}']
             });
 
       - name: Get Artifact Name
@@ -132,11 +132,11 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue_number,
-              name: 'Deploying...'
+              name: '${{ vars.APP_DEPLOYING_LABEL }}'
             });
             await github.rest.issues.addLabels({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue_number,
-              labels: ['Deployed']
+              labels: ['${{ vars.APP_DEPLOYED_LABEL }}']
             });

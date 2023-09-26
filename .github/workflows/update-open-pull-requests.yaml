@@ -25,7 +25,8 @@ jobs:
       id: workflows
       env:
         GITHUB_TOKEN:  ${{ steps.generate_token.outputs.token }}
-      uses: GitHub-Actions-Demo/action-pr-update/@v0.0.18
+      uses: GitHub-Actions-Demo/action-pr-update/@v0.0.19
       with:
         token: ${{ steps.generate_token.outputs.token }}
-        label: ${{ vars.OUTDATED_BRANCH_TRIGGER_LABEL }}
+        label-add: ${{ vars.OUTDATED_BRANCH_TRIGGER_LABEL }}
+        label-remove: ${{ vars.APP_DEPLOYED_LABEL }}

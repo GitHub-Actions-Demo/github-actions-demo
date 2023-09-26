@@ -28,6 +28,7 @@ env:
 
 jobs:
   Docker:
+    # Only run for a specific label
     if: (github.event.label.name == vars.OUTDATED_BRANCH_TRIGGER_LABEL) || !github.event.label.name
     name: Build & Push Docker Image
     permissions:
@@ -47,8 +48,8 @@ jobs:
         uses: 'google-github-actions/auth@v0'
         with:
           token_format: 'access_token'
-          workload_identity_provider: '${{ secrets.WIF_PROVIDER }}' # e.g. - projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
-          service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}' # e.g. - my-service-account@my-project.iam.gserviceaccount.com
+          workload_identity_provider: '${{ secrets.WIF_PROVIDER }}'
+          service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}'
 
       # Authenticate Docker to Google Cloud Artifact Registry
       - name: Docker Auth
@@ -81,11 +82,12 @@ jobs:
           docker push "${{ env.DOCKER_TAG1 }}"
           docker push "${{ env.DOCKER_TAG2 }}"
 
-      # END - Docker auth and build
-
+  # Remove the outdated label that triggered the build from PRs only
   Unlabel:
-    if: (github.event.label.name == vars.OUTDATED_BRANCH_TRIGGER_LABEL) || !github.event.label.name
+    if: github.event.pull_request.number
     name: Remove Rebuilding label
+    permissions:
+      pull-requests: write
     needs: Docker
     runs-on: ubuntu-latest
     steps:
@@ -103,6 +105,7 @@ jobs:
             name: '${{ vars.OUTDATED_BRANCH_TRIGGER_LABEL }}'
           });
 
+  # Automatically trigger a deployed for the main branch only
   Deploy:
     if: github.ref_name == github.event.repository.default_branch
     needs: Docker
