@@ -113,7 +113,7 @@ jobs:
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v0
         with:
-          service: ${{ env.GCP_CLOUD_RUN_SERVICE_NAME || steps.artifact.outputs.artifact-name }}
+          service: ${{ vars.GCP_CLOUD_RUN_SERVICE_NAME || steps.artifact.outputs.artifact-name }}
           region: ${{ env.GAR_LOCATION }}
           # NOTE: If using a pre-built image, update the image name here
           # us-east5-docker.pkg.dev/github-actions-demo-399800/github-actions-demo
