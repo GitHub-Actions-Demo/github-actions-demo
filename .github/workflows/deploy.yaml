@@ -19,6 +19,14 @@ on:
         description: JIRA Ticket ID
         required: true
         type: string
+      deploy-env:
+        description: Environment
+        default: Development
+        type: choice
+        options:
+          - Development
+          - Staging
+          - Production
   workflow_call:
     inputs:
       artifact-name:
@@ -33,6 +41,11 @@ on:
         required: false
         type: string
         default: 'latest'
+      deploy-env:
+        description: Environment
+        default: Development
+        type: string
+        required: false
     secrets:
       WIF_PROVIDER:
         required: true
@@ -51,6 +64,7 @@ jobs:
     # It can can deploy other branches, but the main branch
     # should be the source of code for this workflow
     if: github.ref_name == github.event.repository.default_branch
+    environment: ${{ inputs.deploy-env }}
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -99,7 +113,7 @@ jobs:
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v0
         with:
-          service: ${{ steps.artifact.outputs.artifact-name }}
+          service: ${{ env.GCP_CLOUD_RUN_SERVICE_NAME || steps.artifact.outputs.artifact-name }}
           region: ${{ env.GAR_LOCATION }}
           # NOTE: If using a pre-built image, update the image name here
           # us-east5-docker.pkg.dev/github-actions-demo-399800/github-actions-demo

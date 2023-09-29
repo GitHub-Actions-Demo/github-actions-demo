@@ -118,3 +118,4 @@ jobs:
     secrets: inherit
     with:
       artifact-name: ${{ needs.Docker.outputs.artifact-name }}
+      deploy-env: Staging
